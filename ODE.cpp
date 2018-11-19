@@ -2,6 +2,7 @@
 #include<cmath>
 #include<fstream>
 #include <iostream>
+#include <string>
 using namespace std;
 float pi = 3.14159265358979323846;
 
@@ -12,9 +13,7 @@ float c = 0.2;// [adimensional]
 float m = 0.2; // [Kg]
 float v_i = 300.0; // [m/s] inital velocity
 float x1_i = 0.0; // [m] initial x-position
-float x2_i = v_i*cos(pi/4.0); // initial x velocity
 float y1_i = 0.0; // [m] initial y-position
-float y2_i = v_i*sin(pi/4.0); // initial y velocity
 float dt = 0.00001; // [s] time step 
 
 
@@ -103,14 +102,16 @@ float * rk4(float x1, float x2, float y1, float y2){
 
     return resp;
 }
-
-//-----------------------------------------------------------------------------------------
-int main(){
-    // file where data will be saved
-    ofstream FILE;
-    FILE.open("ode_data.txt");
+/*
+This function solves the ODE and save results in an input file. 
+The method also returns the range of the parabolic motion.
+*/
+float calculate_and_write(ofstream &file, float theta){
 
     // initialize values and pointers
+    float x2_i = v_i*cos(theta); // initial x velocity
+    float y2_i = v_i*sin(theta); // initial y velocity
+
     float *p, *px, *pvx, *py, *pvy;
     float t, x, vx, y, vy;
 
@@ -124,10 +125,12 @@ int main(){
     pvx = &vx;
     py = &y;
     pvy = &vy;
+    
+    int counts = 0;
 
     while (y > -0.01){  //y > 0.0){
         //print current values
-        FILE << *px << "," << *py << endl;
+        file << *px << "," << *py << endl;
         
         // calculate next positions and velocities
         p = rk4(*px,*pvx,*py,*pvy);
@@ -138,9 +141,43 @@ int main(){
         *py = *(p+2);
         *pvy = *(p+3);
         t = t + dt;
-        cout << y << endl;
-        
+        counts += 1;
     }
+    return *px - x1_i; 
+}
+//-----------------------------------------------------------------------------------------
+int main(){
+    int maxAngle;
+    float angles[] = {pi/4.0, pi/18.0, pi/9.0, pi/6.0, 2.0*pi/9.0, 5.0*pi/18.0, pi/3.0, 7.0*pi/18.0};
+    float maxRange = 0.0;
+
+    for(int i = 0; i <= 7; i++)
+    {
+        string s;
+        ofstream FILE;
+        if (i == 0) {
+            s = "ode_45.txt";
+        }
+        else
+        {
+            s = string("ode_")+ to_string(i*10)+string(".txt");
+        }
+        FILE.open(s);
+        float range = calculate_and_write(FILE, *(angles+i));
+        FILE.close();
+        if(range > maxRange){
+            maxRange = range;
+            
+            if (i == 0) {
+                maxAngle = 45;
+            }
+            else
+            {
+                maxAngle = i*10;
+            }
+        }
+    }
+    cout << "El maximo rango fue " << maxRange << " m y corresponde al angulo " << maxAngle;
     return 0;
 }
 //-----------------------------------------------------------------------------------------
