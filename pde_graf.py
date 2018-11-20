@@ -1,0 +1,97 @@
+import numpy as np
+from mpl_toolkits.mplot3d import axes3d
+import matplotlib.pyplot as plt
+
+x = np.zeros((50,50))
+
+for i in range(50):
+    for j in range(50):
+        x[i][j] = i
+
+y = x.transpose()
+
+
+initial = np.genfromtxt("pde_initial.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, initial)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Inital temperature")
+fig.savefig("initial.png")
+plt.show()
+plt.close()
+
+"""
+ci1 = np.genfromtxt("pde_ci1.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, ci1)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Closed boundary intermediate 1")
+fig.savefig("ci1.png")
+plt.show()
+plt.close()
+
+ci2 = np.genfromtxt("pde_ci2.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, ci2)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Closed boundary intermediate 2")
+fig.savefig("ci2.png")
+plt.show()
+plt.close()
+
+cf = np.genfromtxt("pde_cf.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, cf)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Closed boundary final")
+fig.savefig("cf.png")
+plt.show()
+plt.close()
+"""
+oi1= np.genfromtxt("pde_oi1.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, oi1)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Open boundary intermediate 1")
+fig.savefig("oi1.png")
+plt.show()
+plt.close()
+
+oi2 = np.genfromtxt("pde_oi2.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, oi2)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Open boundary intermediate 2")
+fig.savefig("oi2.png")
+plt.show()
+plt.close()
+
+of = np.genfromtxt("pde_of.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, of)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Open boundary final")
+fig.savefig("of.png")
+plt.show()
+plt.close()
