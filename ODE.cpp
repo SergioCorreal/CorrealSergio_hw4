@@ -147,37 +147,84 @@ float calculate_and_write(ofstream &file, float theta){
 }
 //-----------------------------------------------------------------------------------------
 int main(){
-    int maxAngle;
-    float angles[] = {pi/4.0, pi/18.0, pi/9.0, pi/6.0, 2.0*pi/9.0, 5.0*pi/18.0, pi/3.0, 7.0*pi/18.0};
-    float maxRange = 0.0;
 
-    for(int i = 0; i <= 7; i++)
-    {
-        string s;
-        ofstream FILE;
-        if (i == 0) {
-            s = "ode_45.txt";
-        }
-        else
-        {
-            s = string("ode_")+ to_string(i*10)+string(".txt");
-        }
-        FILE.open(s);
-        float range = calculate_and_write(FILE, *(angles+i));
-        FILE.close();
-        if(range > maxRange){
-            maxRange = range;
-            
-            if (i == 0) {
-                maxAngle = 45;
-            }
-            else
-            {
-                maxAngle = i*10;
-            }
-        }
+    int maxAngle = 45;
+    float angles[] = {pi/4.0, pi/18.0, pi/9.0, pi/6.0, 2.0*pi/9.0, 5.0*pi/18.0, pi/3.0, 7.0*pi/18.0};
+
+    ofstream FILE0;
+    ofstream FILE1;
+    ofstream FILE2;
+    ofstream FILE3;
+    ofstream FILE4;
+    ofstream FILE5;
+    ofstream FILE6;
+    ofstream FILE7;
+    
+    FILE0.open("ode_45.txt");
+    FILE1.open("ode_10.txt");
+    FILE2.open("ode_20.txt");
+    FILE3.open("ode_30.txt");
+    FILE4.open("ode_40.txt");
+    FILE5.open("ode_50.txt");
+    FILE6.open("ode_60.txt");
+    FILE7.open("ode_70.txt");
+
+    float maxRange = calculate_and_write(FILE0, pi/4.0);
+    float range;
+
+    for(int i =1; i<8; i++){
+        if(i == 1){
+		range = calculate_and_write(FILE1, pi/18.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 10;
+		}		
+	}
+        else if(i == 2){
+		range = calculate_and_write(FILE2, pi/9.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 20;
+		}
+	}
+        else if(i == 3){
+		range = calculate_and_write(FILE3, pi/6.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 30;
+		}
+	}
+        else if(i == 4){
+		range = calculate_and_write(FILE4, 2.0*pi/9.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 40;
+		}
+	}
+	else if(i == 5){
+		range = calculate_and_write(FILE5, 5.0*pi/18.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 50;
+		}
+	}
+	else if(i == 6){
+		range = calculate_and_write(FILE6, pi/3.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 60;
+		}
+	}
+	else{
+		range = calculate_and_write(FILE7, 7.0*pi/18.0);
+		if(range > maxRange){
+			maxRange = range;
+			maxAngle = 70;
+		}
+	}      
     }
-    cout << "El maximo rango fue " << maxRange << " m y corresponde al angulo " << maxAngle;
+
+    cout << "El maximo rango fue " << maxRange << " m y corresponde al angulo " << maxAngle << endl;
     return 0;
 }
 //-----------------------------------------------------------------------------------------

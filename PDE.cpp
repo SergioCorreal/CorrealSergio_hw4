@@ -6,12 +6,12 @@
 using namespace std;
 float v = 1e-4; // [m**2/s] thermal diffusivity guessed value. The value given in homework has dimensional inconsistency
 float dt = 100; // [s] this agrees with stability condition
-float time = 25000000; // [s] total time
+float ti = 25000000; // [s] total time
 float dx = 1.0; // [m]
 float dy = 1.0; // [m]
 float L = 50.0; // [m] size of the square side
 int N_L = int(L/dx); // t grid
-int N_t = int(time/dt); // x or y grid
+int N_t = int(ti/dt); // x or y grid
 float eta = v*dt/(2.0*dx*dx); // this should be less than 0.5 (stability condition)
 
 void write_initial(ofstream &initial){
@@ -205,7 +205,7 @@ void write_evolution(ofstream &i1, ofstream &i2, ofstream &end , int boundary){
             }
         }
         t += dt;
-        cout << t << endl;
+        //cout << t << endl;
     }
     
 }
