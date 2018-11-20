@@ -10,6 +10,7 @@ for i in range(50):
 
 y = x.transpose()
 
+# inicial
 
 initial = np.genfromtxt("pde_initial.txt", delimiter = ",")
 fig = plt.figure()
@@ -23,7 +24,8 @@ fig.savefig("initial.png")
 plt.show()
 plt.close()
 
-"""
+# Todas las graficas
+
 ci1 = np.genfromtxt("pde_ci1.txt", delimiter = ",")
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -59,7 +61,7 @@ plt.title("Closed boundary final")
 fig.savefig("cf.png")
 plt.show()
 plt.close()
-"""
+
 oi1= np.genfromtxt("pde_oi1.txt", delimiter = ",")
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
@@ -93,5 +95,87 @@ ax.set_ylabel("y")
 ax.set_zlabel("T")
 plt.title("Open boundary final")
 fig.savefig("of.png")
+plt.show()
+plt.close()
+
+
+pi1= np.genfromtxt("pde_pi1.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, pi1)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Periodic boundary intermediate 1")
+fig.savefig("pi1.png")
+plt.show()
+plt.close()
+
+pi2 = np.genfromtxt("pde_pi2.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, pi2)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Periodic boundary intermediate 2")
+fig.savefig("pi2.png")
+plt.show()
+plt.close()
+
+pf = np.genfromtxt("pde_pf.txt", delimiter = ",")
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, pf)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Periodic boundary final")
+fig.savefig("pf.png")
+plt.show()
+plt.close()
+
+# Average
+
+i1 = np.zeros((50,50))
+i2 = np.zeros((50,50))
+f = np.zeros((50,50))
+
+for i in range(50):
+        for j in range(50):
+                i1[i][j] = (1.0/3.0)*(ci1[i][j]+ oi1[i][j] + pi1[i][j])
+                i2[i][j] = (1.0/3.0)*(ci2[i][j]+ oi2[i][j] + pi2[i][j])
+                f[i][j] = (1.0/3.0)*(cf[i][j]+ of[i][j] + pf[i][j])
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, i1)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Average intermediate 1")
+fig.savefig("i1.png")
+plt.show()
+plt.close()
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, i2)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Average intermediate 2")
+fig.savefig("i2.png")
+plt.show()
+plt.close()
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(x, y, f)
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("T")
+plt.title("Average final")
+fig.savefig("f.png")
 plt.show()
 plt.close()
